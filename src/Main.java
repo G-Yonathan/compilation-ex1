@@ -1,31 +1,23 @@
 import java.io.*;
-import java.io.PrintWriter;
 
 import java_cup.runtime.Symbol;
-   
-public class Main
-{
-	static public void main(String argv[])
-	{
+
+public class Main {
+	static public void main(String argv[]) {
 		Lexer l;
 		Symbol s;
 		FileReader fileReader;
 		PrintWriter fileWriter;
 		String inputFileName = argv[0];
 		String outputFileName = argv[1];
-		
-		try
-		{
+		StringBuilder out = new StringBuilder();
+
+		try {
 			/********************************/
 			/* [1] Initialize a file reader */
 			/********************************/
 			fileReader = new FileReader(inputFileName);
 
-			/********************************/
-			/* [2] Initialize a file writer */
-			/********************************/
-			fileWriter = new PrintWriter(outputFileName);
-			
 			/******************************/
 			/* [3] Initialize a new lexer */
 			/******************************/
@@ -35,12 +27,12 @@ public class Main
 			/* [4] Read next token */
 			/***********************/
 			s = l.next_token();
+			boolean first = true;
 
 			/********************************/
 			/* [5] Main reading tokens loop */
 			/********************************/
-			while (s.sym != TokenNames.EOF)
-			{
+			while (s.sym != TokenNames.EOF) {
 				/************************/
 				/* [6] Print to console */
 				/************************/
@@ -51,38 +43,45 @@ public class Main
 				System.out.print("]:");
 				System.out.print(s.value);
 				System.out.print("\n");
-				
+
 				/*********************/
 				/* [7] Print to file */
 				/*********************/
-				fileWriter.print(TokenNames.nameOf(s.sym));
-				if (s.value != null) {
-					fileWriter.print("("+s.value+")");
+				if (!first) {
+					out.append("\n");
 				}
-				fileWriter.print("["+l.getLine()+","+l.getTokenStartPosition()+"]");
-				fileWriter.print("\n");
-				
+				out.append(TokenNames.nameOf(s.sym));
+				if (s.value != null) {
+					out.append("(" + s.value + ")");
+				}
+				out.append("[" + l.getLine() + "," + l.getTokenStartPosition() + "]");
+				first = false;
+
 				/***********************/
 				/* [8] Read next token */
 				/***********************/
 				s = l.next_token();
 			}
-			
+
 			/******************************/
 			/* [9] Close lexer input file */
 			/******************************/
 			l.yyclose();
+		}
 
-			/**************************/
-			/* [10] Close output file */
-			/**************************/
+		catch (Throwable e) {
+			out = new StringBuilder("ERROR");
+		}
+
+		/*********************/
+		/* Write output file */
+		/*********************/
+		try {
+			fileWriter = new PrintWriter(outputFileName);
+			fileWriter.print(out);
 			fileWriter.close();
-    	}
-			     
-		catch (Exception e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
-
