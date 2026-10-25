@@ -76,12 +76,12 @@ LineTerminator	= \r|\n|\r\n
 WhiteSpace		= {LineTerminator} | [ \t]
 DIGIT			= [0-9]
 LETTER			= [a-zA-Z]
-LD    = {LETTER} | {DIGIT}
-INTEGER			= 0 | [1-9]{DIGIT}*
+LD    			= {LETTER} | {DIGIT}
 ID              = {LETTER}{LD}*
 STRING          = \"({LETTER})*\"
-COMMENT_CHAR    = [a-zA-Z0-9 \t()\[\]\{\}?!+\-*/.;]
-TYPE_ONE_COMMENT= "//"{COMMENT_CHAR}*{LineTerminator}
+TYPE_ONE_COMMENT_CHAR    = [a-zA-Z0-9 \t()\[\]\{\}?!+\-*/.;]
+TYPE_TWO_COMMENT_CHAR    = {TYPE_ONE_COMMENT_CHAR} | \r | \n
+TYPE_ONE_COMMENT= "//"{TYPE_ONE_COMMENT_CHAR}*{LineTerminator}
 BAD_LINE_COMMENT= "//"[^\r\n]*
 TYPE_TWO_COMMENT= "/*"
 
@@ -141,15 +141,24 @@ TYPE_TWO_COMMENT= "/*"
 {TYPE_ONE_COMMENT}  { /* Type 1 Comment */ }
 {TYPE_TWO_COMMENT}  { yybegin(TYPE_TWO_COMMENT); }
 {BAD_LINE_COMMENT}  { throw new Error("Unterminated line"); }
-{INTEGER}			{ return symbol(TokenNames.INT, Integer.valueOf(yytext()));}
+{DIGIT}+			{
+						String t = yytext();
+						if ((t.length() > 1 && t.charAt(0) == '0') || t.length() > 5 || Integer.parseInt(t) > 32767)
+						{
+							throw new Error("Illegal Integer");
+						}
+						return symbol(TokenNames.INT, Integer.valueOf(t));
+					}
 {ID}				{ return symbol(TokenNames.ID,     yytext());}
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 {STRING}			{ return symbol(TokenNames.STRING,	yytext());}
 <<EOF>>				{ return symbol(TokenNames.EOF);}
+[^]					{ throw new Error("Illegal character") }
 }
 
 <TYPE_TWO_COMMENT> {
 	"*/" { yybegin(YYINITIAL); }
-	{COMMENT_CHAR} { }
-	[^] { throw new Error(); }
+	{TYPE_TWO_COMMENT_CHAR} { }
+	[^] { throw new Error("Illegal character in type 2 comment"); }
+	<<EOF>> {throw new Error("Unclosed type 2 comment");}
 }
