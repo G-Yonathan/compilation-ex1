@@ -153,7 +153,7 @@ TYPE_TWO_COMMENT= "/*"
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 {STRING}			{ return symbol(TokenNames.STRING,	yytext());}
 <<EOF>>				{ return symbol(TokenNames.EOF);}
-[^]					{ throw new Error("Illegal character") }
+[^]					{ throw new Error("Illegal character"); }
 }
 
 <TYPE_TWO_COMMENT> {
