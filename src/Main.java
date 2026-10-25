@@ -1,5 +1,4 @@
 import java.io.*;
-import java.io.PrintWriter;
 
 import java_cup.runtime.Symbol;
    
@@ -35,6 +34,7 @@ public class Main
 			/* [4] Read next token */
 			/***********************/
 			s = l.next_token();
+			boolean first = true;
 
 			/********************************/
 			/* [5] Main reading tokens loop */
@@ -55,12 +55,15 @@ public class Main
 				/*********************/
 				/* [7] Print to file */
 				/*********************/
+				if (!first) {
+					fileWriter.print("\n");
+				}
 				fileWriter.print(TokenNames.nameOf(s.sym));
 				if (s.value != null) {
 					fileWriter.print("("+s.value+")");
 				}
 				fileWriter.print("["+l.getLine()+","+l.getTokenStartPosition()+"]");
-				fileWriter.print("\n");
+				first = false;
 				
 				/***********************/
 				/* [8] Read next token */

@@ -80,9 +80,9 @@ LD    = {LETTER} | {DIGIT}
 INTEGER			= 0 | [1-9]{DIGIT}*
 ID              = {LETTER}{LD}*
 STRING          = \"({LETTER})*\"
-COMMENT_CHAR    = [a-zA-Z0-9{WhiteSpace}()\[\]{}?!+\-*/.;]
+COMMENT_CHAR    = [a-zA-Z0-9 \t()\[\]\{\}?!+\-*/.;]
 TYPE_ONE_COMMENT= "//"{COMMENT_CHAR}*{LineTerminator}
-BAD_LINE_COMMENT= "//"[^{LineTerminator}]*
+BAD_LINE_COMMENT= "//"[^\r\n]*
 TYPE_TWO_COMMENT= "/*"
 
 %state TYPE_ONE_COMMENT
