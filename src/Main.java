@@ -55,9 +55,11 @@ public class Main
 				/*********************/
 				/* [7] Print to file */
 				/*********************/
-				fileWriter.print(l.getLine());
-				fileWriter.print(": ");
-				fileWriter.print(s.value);
+				fileWriter.print(TokenNames.nameOf(s.sym));
+				if (s.value != null) {
+					fileWriter.print("("+s.value+")");
+				}
+				fileWriter.print("["+l.getLine()+","+l.getTokenStartPosition()+"]");
 				fileWriter.print("\n");
 				
 				/***********************/
@@ -83,5 +85,4 @@ public class Main
 		}
 	}
 }
-
 

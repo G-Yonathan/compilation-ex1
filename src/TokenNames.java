@@ -7,7 +7,7 @@ public interface TokenNames {
   public static final int DIVIDE = 4;
   public static final int LPAREN = 5;
   public static final int RPAREN = 6;
-  public static final int NUMBER = 7;
+  public static final int INT = 7;
   public static final int ID = 8;
   public static final int EQ = 9;
   public static final int LT = 10;
@@ -35,4 +35,45 @@ public interface TokenNames {
   public static final int TYPE_STRING = 32;
   public static final int TYPE_VOID = 33;
   public static final int STRING = 34;
+
+  public static String nameOf(int token) {
+    switch (token) {
+      case EOF: return "EOF";
+      case PLUS: return "PLUS";
+      case MINUS: return "MINUS";
+      case TIMES: return "TIMES";
+      case DIVIDE: return "DIVIDE";
+      case LPAREN: return "LPAREN";
+      case RPAREN: return "RPAREN";
+      case INT: return "INT";
+      case ID: return "ID";
+      case EQ: return "EQ";
+      case LT: return "LT";
+      case GT: return "GT";
+      case AND: return "AND";
+      case OR: return "OR";
+      case LBRACK: return "LBRACK";
+      case RBRACK: return "RBRACK";
+      case LBRACE: return "LBRACE";
+      case RBRACE: return "RBRACE";
+      case COMMA: return "COMMA";
+      case DOT: return "DOT";
+      case SEMICOLON: return "SEMICOLON";
+      case ASSIGN: return "ASSIGN";
+      case ARRAY: return "ARRAY";
+      case CLASS: return "CLASS";
+      case EXTENDS: return "EXTENDS";
+      case NEW: return "NEW";
+      case NIL: return "NIL";
+      case IF: return "IF";
+      case ELSE: return "ELSE";
+      case WHILE: return "WHILE";
+      case RETURN: return "RETURN";
+      case TYPE_INT: return "TYPE_INT";
+      case TYPE_STRING: return "TYPE_STRING";
+      case TYPE_VOID: return "TYPE_VOID";
+      case STRING: return "STRING";
+      default: return "UNKNOWN";
+    }
+  }
 }

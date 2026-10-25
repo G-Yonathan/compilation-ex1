@@ -83,7 +83,10 @@ STRING          = \"({LETTER})*\"
 COMMENT_CHAR    = [a-zA-Z0-9{WhiteSpace}()\[\]{}?!+\-*/.;]
 TYPE_ONE_COMMENT= "//"{COMMENT_CHAR}*{LineTerminator}
 BAD_LINE_COMMENT= "//"[^{LineTerminator}]*
-TYPE_TWO_COMMENT= "/*"{COMMENT_CHAR}*
+TYPE_TWO_COMMENT= "/*"
+
+%state TYPE_ONE_COMMENT
+%state TYPE_TWO_COMMENT
 
 /******************************/
 /* DOLLAR DOLLAR - DON'T TOUCH! */
@@ -135,9 +138,18 @@ TYPE_TWO_COMMENT= "/*"{COMMENT_CHAR}*
 "string" 			{ return symbol(TokenNames.TYPE_STRING);}
 "void" 			{ return symbol(TokenNames.TYPE_VOID);}
 
-{INTEGER}			{ return symbol(TokenNames.NUMBER, Integer.valueOf(yytext()));}
+{TYPE_ONE_COMMENT}  { /* Type 1 Comment */ }
+{TYPE_TWO_COMMENT}  { yybegin(TYPE_TWO_COMMENT); }
+{BAD_LINE_COMMENT}  { throw new Error("Unterminated line"); }
+{INTEGER}			{ return symbol(TokenNames.INT, Integer.valueOf(yytext()));}
 {ID}				{ return symbol(TokenNames.ID,     yytext());}
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 {STRING}			{ return symbol(TokenNames.STRING,	yytext());}
 <<EOF>>				{ return symbol(TokenNames.EOF);}
+}
+
+<TYPE_TWO_COMMENT> {
+	"*/" { yybegin(YYINITIAL); }
+	{COMMENT_CHAR} { }
+	[^] { throw new Error(); }
 }
