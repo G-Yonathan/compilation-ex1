@@ -1,0 +1,2 @@
+# Keep test files byte-exact (no CRLF conversion), since some tests depend on line endings
+* -text
