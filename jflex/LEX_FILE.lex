@@ -85,7 +85,6 @@ TYPE_ONE_COMMENT= "//"{TYPE_ONE_COMMENT_CHAR}*{LineTerminator}
 BAD_LINE_COMMENT= "//"[^\r\n]*
 TYPE_TWO_COMMENT= "/*"
 
-%state TYPE_ONE_COMMENT
 %state TYPE_TWO_COMMENT
 
 /******************************/
