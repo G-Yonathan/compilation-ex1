@@ -1,0 +1,4 @@
+// header comment
+int f(int n) /* params */ {
+    return n; // done
+}

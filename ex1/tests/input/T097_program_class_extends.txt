@@ -1,0 +1,6 @@
+class Point extends Shape
+{
+    int x;
+    string name := "origin";
+}
+array IntArr = int[]
