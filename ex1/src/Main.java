@@ -19,34 +19,23 @@ public class Main {
 			fileReader = new FileReader(inputFileName);
 
 			/******************************/
-			/* [3] Initialize a new lexer */
+			/* [2] Initialize a new lexer */
 			/******************************/
 			l = new Lexer(fileReader);
 
 			/***********************/
-			/* [4] Read next token */
+			/* [3] Read next token */
 			/***********************/
 			s = l.next_token();
 			boolean first = true;
 
 			/********************************/
-			/* [5] Main reading tokens loop */
+			/* [4] Main reading tokens loop */
 			/********************************/
 			while (s.sym != TokenNames.EOF) {
-				/************************/
-				/* [6] Print to console */
-				/************************/
-				System.out.print("[");
-				System.out.print(l.getLine());
-				System.out.print(",");
-				System.out.print(l.getTokenStartPosition());
-				System.out.print("]:");
-				System.out.print(s.value);
-				System.out.print("\n");
-
-				/*********************/
-				/* [7] Print to file */
-				/*********************/
+				/**************************************/
+				/* [5] Append token to string builder */
+				/**************************************/
 				if (!first) {
 					out.append("\n");
 				}
@@ -58,13 +47,13 @@ public class Main {
 				first = false;
 
 				/***********************/
-				/* [8] Read next token */
+				/* [6] Read next token */
 				/***********************/
 				s = l.next_token();
 			}
 
 			/******************************/
-			/* [9] Close lexer input file */
+			/* [7] Close lexer input file */
 			/******************************/
 			l.yyclose();
 		}
@@ -73,9 +62,9 @@ public class Main {
 			out = new StringBuilder("ERROR");
 		}
 
-		/*********************/
-		/* Write output file */
-		/*********************/
+		/*************************/
+		/* [8] Write output file */
+		/*************************/
 		try {
 			fileWriter = new PrintWriter(outputFileName);
 			fileWriter.print(out);
