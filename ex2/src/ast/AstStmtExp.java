@@ -1,6 +1,6 @@
 package ast;
 
-public class AstStmtAssign extends AstStmt
+public class AstStmtExp extends AstStmt
 {
 	/***************/
 	/*  var := exp */
@@ -11,7 +11,7 @@ public class AstStmtAssign extends AstStmt
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AstStmtAssign(AstVar var, AstExp exp)
+	public AstStmtExp(AstVar var, AstExp exp)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -41,7 +41,7 @@ public class AstStmtAssign extends AstStmt
 		System.out.print("AST NODE ASSIGN STMT\n");
 
 		/***********************************/
-		/* RECURSIVELY PRINT VAR + EXP ... */
+		/* RECURSIVELY PRINT var + exp ... */
 		/***********************************/
 		if (var != null) var.printMe();
 		if (exp != null) exp.printMe();
@@ -49,14 +49,12 @@ public class AstStmtAssign extends AstStmt
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
-		AstGraphviz.getInstance().logNode(
-				serialNumber,
-			"ASSIGN\nleft := right\n");
-		
+		AstGraphviz.getInstance().logNode(serialNumber, "ASSIGN\nleft := right");
+
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		AstGraphviz.getInstance().logEdge(serialNumber,var.serialNumber);
-		AstGraphviz.getInstance().logEdge(serialNumber,exp.serialNumber);
+		if (var != null) AstGraphviz.getInstance().logEdge(serialNumber,var.serialNumber);
+		if (exp != null) AstGraphviz.getInstance().logEdge(serialNumber,exp.serialNumber);
 	}
 }

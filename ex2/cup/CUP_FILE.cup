@@ -180,16 +180,16 @@ arrayTypedef::= 	ARRAY ID:i EQ type:t LBRACK RBRACK SEMICOLON {: RESULT = new As
 					;
 					
 exp			::=		var:v							{: RESULT = new AstExpVar(v);          	:}
-					| LPAREN exp:e RPAREN			{: RESULT = new AstExpParen(e);			:}
-					| exp:e1 PLUS  exp:e2			{: RESULT = new AstExpBinop(e1, e2, 0);	:}
-					| exp:e1 MINUS exp:e2			{: RESULT = new AstExpBinop(e1, e2, 1);	:}
-					| exp:e1 TIMES exp:e2			{: RESULT = new AstExpBinop(e1, e2, 2);	:}
-					| exp:e1 DIVIDE exp:e2			{: RESULT = new AstExpBinop(e1, e2, 3);	:}
-					| exp:e1 LT exp:e2				{: RESULT = new AstExpBinop(e1, e2, 4);	:}
-					| exp:e1 GT exp:e2				{: RESULT = new AstExpBinop(e1, e2, 5);	:}
-					| exp:e1 EQ exp:e2				{: RESULT = new AstExpBinop(e1, e2, 6);	:}
-					| exp:e1 AND exp:e2				{: RESULT = new AstExpBinop(e1, e2, 7);	:}
-					| exp:e1 OR exp:e2				{: RESULT = new AstExpBinop(e1, e2, 8);	:}
+					| LPAREN exp:e RPAREN			{: System.out.print("====================== exp -> LPAREN exp RPAREN\n"); RESULT = e; :}
+					| exp:e1 PLUS  exp:e2			{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.PLUS);	:}
+					| exp:e1 MINUS exp:e2			{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.MINUS);	:}
+					| exp:e1 TIMES exp:e2			{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.TIMES);	:}
+					| exp:e1 DIVIDE exp:e2			{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.DIVIDE);:}
+					| exp:e1 LT exp:e2				{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.LT);	:}
+					| exp:e1 GT exp:e2				{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.GT);	:}
+					| exp:e1 EQ exp:e2				{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.EQ);	:}
+					| exp:e1 AND exp:e2				{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.AND);	:}
+					| exp:e1 OR exp:e2				{: RESULT = new AstExpBinop(e1, e2, AstExpBinop.OR);	:}
 					| callExp:c						{: RESULT = new AstExpCallExp(c);		:}
 					| INT:i							{: RESULT = new AstExpInt(i);	:}
 					| MINUS INT:i					{: RESULT = new AstExpInt(-i);	:}
