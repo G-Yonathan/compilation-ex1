@@ -118,11 +118,10 @@ program 	::=		dec:d	program:p		{: RESULT = new AstProgram(d,p,    dleft+1);    :
 					| dec:d					{: RESULT = new AstProgram(d,null, dleft+1); :}
 					;
 
-/* add class AstDec, other classes inherit from it */
-dec			::=		varDec:v				{: RESULT = new AstDecVar(v);    		:}
-					| funcDec:f				{: RESULT = new AstDecFunc(f);    		:}
-					| classDec:c			{: RESULT = new AstDecClass(c);    	:}
-					| arrayTypedef:a		{: RESULT = new AstDecArrayTypedef(a); :}
+dec			::=		varDec:v				{: RESULT = new AstDecVar(v, vleft+1);    		:}
+					| funcDec:f				{: RESULT = new AstDecFunc(f, fleft+1);    		:}
+					| classDec:c			{: RESULT = new AstDecClass(c, cleft+1);    	:}
+					| arrayTypedef:a		{: RESULT = new AstDecArrayTypedef(a, aleft+1); :}
 					;
 
 type		::=		TYPE_INT:t				{: RESULT = new AstTypeInt(tleft+1);    			:}
