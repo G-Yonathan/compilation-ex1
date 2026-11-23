@@ -1,6 +1,6 @@
 package ast;
 
-public class AstStmtNewExp extends AstStmt
+public class AstStmtAssignNew extends AstStmt
 {
 	/******************/
 	/*  var := newExp */
@@ -11,7 +11,7 @@ public class AstStmtNewExp extends AstStmt
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AstStmtNewExp(AstVar var, AstNewExp newExp)
+	public AstStmtAssignNew(AstVar var, AstNewExp newExp)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
