@@ -3,24 +3,23 @@
 /*************/
 import java_cup.runtime.*;
 import ast.*;
+import java.io.PrintWriter;
 
-parser code 
+parser code
 {:
 	public Lexer lexer;
+	public PrintWriter fileWriter;
 
-	public Parser(Lexer lexer)
+	public Parser(Lexer lexer, PrintWriter fileWriter)
 	{
 		super(lexer);
 		this.lexer = lexer;
+		this.fileWriter = fileWriter;
 	}
 	public void report_error(String message, Object info)
 	{
-		System.out.print("ERROR >> ");		
-		System.out.print("[");
-		System.out.print(lexer.getLine());
-		System.out.print(":");
-		System.out.print(lexer.getTokenStartPosition());
-		System.out.print("] ");		
+		fileWriter.print("ERROR(" + lexer.getLine() + ")");
+		fileWriter.close();
 		System.exit(0);
 	}
 :}
@@ -30,23 +29,7 @@ parser code
 /************************/
 scan with
 {:
-	Symbol s;
-	s = lexer.next_token();
-	//System.out.print(s.sym);
-	System.out.print("[");
-	System.out.print(lexer.getLine());
-	System.out.print(":");
-	System.out.print(lexer.getTokenStartPosition());
-	System.out.print("] ");
-	System.out.print(TokenNames.terminalNames[s.sym]);
-	if (s.value != null)
-	{
-		System.out.print("( ");
-		System.out.print(s.value);
-		System.out.print(" )");
-	}
-	System.out.print("\n");
-	return s; 
+	return lexer.next_token();
 :};
 
 /*************/
