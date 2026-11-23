@@ -114,8 +114,8 @@ start with program;
 /* DERIVATION RULES */
 /********************/
 
-program 	::=		dec:d	program:p		{: RESULT = new AstProgram(d,p);    :}
-					| dec:d					{: RESULT = new AstProgram(d,null); :}
+program 	::=		dec:d	program:p		{: RESULT = new AstProgram(d,p,    dleft+1);    :}
+					| dec:d					{: RESULT = new AstProgram(d,null, dleft+1); :}
 					;
 
 /* add class AstDec, other classes inherit from it */
@@ -125,11 +125,10 @@ dec			::=		varDec:v				{: RESULT = new AstDecVar(v);    		:}
 					| arrayTypedef:a		{: RESULT = new AstDecArrayTypedef(a); :}
 					;
 
-/* add class AstType, other classes inherit from it */
-type		::=		TYPE_INT				{: RESULT = new AstTypeInt();    			:}
-					| TYPE_STRING			{: RESULT = new AstTypeString();    		:}
-					| TYPE_VOID				{: RESULT = new AstTypeVoid();    			:}
-					| ID:i					{: RESULT = new AstTypeId(i); 			:}
+type		::=		TYPE_INT:t				{: RESULT = new AstTypeInt(tleft+1);    			:}
+					| TYPE_STRING:t			{: RESULT = new AstTypeString(tleft+1);    		:}
+					| TYPE_VOID:t				{: RESULT = new AstTypeVoid(tleft+1);    			:}
+					| ID:i					{: RESULT = new AstTypeId(i, ileft+1); 			:}
 					;
 
 varDec		::=		type:t ID:i SEMICOLON 					{: RESULT = new AstVarDecExp(t,i,null); :}
@@ -197,9 +196,9 @@ expList		::=		exp:e						{: RESULT = new AstExpList(e,null); :}
 					| exp:e COMMA expList:l		{: RESULT = new AstExpList(e,l);    :}
 					;
 
-var			::=		ID:name								{: RESULT = new AstVarSimple(name);       :}
-					| var:v DOT ID:fieldName			{: RESULT = new AstVarField(v,fieldName); :}
-					| var:v LBRACK exp:e RBRACK			{: RESULT = new AstVarSubscript(v,e);     :}
+var			::=		ID:name								{: RESULT = new AstVarSimple(name, nameleft+1);       :}
+					| var:v DOT ID:fieldName			{: RESULT = new AstVarField(v,fieldName, vleft+1); :}
+					| var:v LBRACK exp:e RBRACK			{: RESULT = new AstVarSubscript(v,e, vleft+1);     :}
 					;
 
 stmt		::=		varDec:v																						{: RESULT = new AstStmtVarDec(v); :}
