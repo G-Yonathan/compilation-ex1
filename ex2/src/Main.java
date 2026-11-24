@@ -10,7 +10,7 @@ public class Main
 		Lexer l;
 		Parser p;
 		Symbol s;
-		AstStmtList ast;
+		AstProgram ast;
 		FileReader fileReader;
 		PrintWriter fileWriter;
 		String inputFileName = argv[0];
@@ -36,23 +36,34 @@ public class Main
 			/*******************************/
 			/* [4] Initialize a new parser */
 			/*******************************/
-			p = new Parser(l);
+			p = new Parser(l, fileWriter);
 
 			/***********************************/
 			/* [5] 3 ... 2 ... 1 ... Parse !!! */
 			/***********************************/
-			ast = (AstStmtList) p.parse().value;
-			
+			try
+			{
+				ast = (AstProgram) p.parse().value;
+			}
+			catch (Error e)
+			{
+				/* the lexer throws Error on any lexical error */
+				fileWriter.print("ERROR");
+				fileWriter.close();
+				return;
+			}
+
+			/**************************************/
+			/* [6] Write OK and close output file */
+			/**************************************/
+			fileWriter.print("OK");
+			fileWriter.close();
+
 			/*************************/
-			/* [6] Print the AST ... */
+			/* [7] Print the AST ... */
 			/*************************/
 			ast.printMe();
-			
-			/*************************/
-			/* [7] Close output file */
-			/*************************/
-			fileWriter.close();
-			
+
 			/*************************************/
 			/* [8] Finalize AST GRAPHIZ DOT file */
 			/*************************************/
