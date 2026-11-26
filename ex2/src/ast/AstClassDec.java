@@ -1,6 +1,6 @@
 package ast;
 
-public class AstClassDec extends AstNode
+public class AstClassDec extends AstDec
 {
 	/*******************************************************/
 	/*  CLASS ID [ EXTENDS ID ] { cFieldList }             */

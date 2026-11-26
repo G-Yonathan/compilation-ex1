@@ -1,6 +1,6 @@
 package ast;
 
-public class AstFuncDec extends AstNode
+public class AstFuncDec extends AstDec
 {
 	/*****************************************************/
 	/*  returnType ID ( [paramList] ) { stmtList }       */
