@@ -1,0 +1,5 @@
+// line comment at top
+int x;   /* block
+comment spanning lines */ int y;
+void f() { // trailing comment
+	return; /* inline */ }

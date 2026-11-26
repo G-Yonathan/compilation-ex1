@@ -1,0 +1,10 @@
+void main()
+{
+	f();
+	g(1);
+	h(1, x, "str", nil, a + b);
+	obj.m();
+	obj.field.m(x[1], y.z);
+	arr[2].m(3);
+	int r := f() + obj.m(1) * 2;
+}

@@ -1,0 +1,10 @@
+class Animal
+{
+	int legs := 4;
+	string name;
+	void speak() { return; }
+}
+class Dog extends Animal
+{
+	int bark(int times) { return times * 2; }
+}

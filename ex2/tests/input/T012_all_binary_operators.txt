@@ -1,0 +1,9 @@
+void main()
+{
+	int x := a + b - c * d / e;
+	int y := a < b;
+	int z := a > b;
+	int w := a = b;
+	int v := a and b or c;
+	int u := a + b * c - d / e < f = g and h or i;
+}

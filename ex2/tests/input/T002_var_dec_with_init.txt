@@ -1,0 +1,4 @@
+int x := 5;
+string s := "hello";
+int y := -7;
+Point p := nil;

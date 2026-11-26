@@ -1,0 +1,8 @@
+void main()
+{
+	Point p := new Point;
+	IntArray a := new int[5];
+	p := new Point;
+	a := new int[x + 1];
+	Point q;
+}
