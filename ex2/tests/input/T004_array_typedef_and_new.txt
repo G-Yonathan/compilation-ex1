@@ -1,4 +1,0 @@
-array IntArray = int[];
-array Matrix = IntArray[];
-IntArray a := new int[10];
-Matrix m := new IntArray[3];

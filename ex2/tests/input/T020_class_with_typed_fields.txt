@@ -1,7 +1,0 @@
-array PointArr = Point[];
-class Line extends Shape
-{
-	Point start;
-	PointArr pts := nil;
-	Point mid() { return start; }
-}

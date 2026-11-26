@@ -1,5 +1,0 @@
-void f()
-{
-	int x := 1 +
-	new int;
-}
