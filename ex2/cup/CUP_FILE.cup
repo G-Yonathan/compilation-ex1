@@ -89,7 +89,7 @@ non terminal AstFuncDec funcDec;
 non terminal AstParamList paramList;
 non terminal AstClassDec classDec;
 non terminal AstCFieldList cFieldList;
-non terminal AstCField cField;
+non terminal AstDec cField;
 non terminal AstArrayTypedef arrayTypedef;
 non terminal AstNewExp newExp;
 non terminal AstCallExp callExp;
@@ -118,10 +118,11 @@ program 	::=		dec:d	program:p		{: RESULT = new AstProgram(d,p,    dleft+1);    :
 					| dec:d					{: RESULT = new AstProgram(d,null, dleft+1); :}
 					;
 
-dec			::=		varDec:v				{: RESULT = new AstDecVar(v, vleft+1);    		:}
-					| funcDec:f				{: RESULT = new AstDecFunc(f, fleft+1);    		:}
-					| classDec:c			{: RESULT = new AstDecClass(c, cleft+1);    	:}
-					| arrayTypedef:a		{: RESULT = new AstDecArrayTypedef(a, aleft+1); :}
+/* each declaration class extends AstDec, so it is passed up as is */
+dec			::=		varDec:v				{: v.line = vleft+1; RESULT = v; :}
+					| funcDec:f				{: f.line = fleft+1; RESULT = f; :}
+					| classDec:c			{: c.line = cleft+1; RESULT = c; :}
+					| arrayTypedef:a		{: a.line = aleft+1; RESULT = a; :}
 					;
 
 type		::=		TYPE_INT:t				{: RESULT = new AstTypeInt(tleft+1);    			:}
@@ -155,8 +156,9 @@ cFieldList 	::=		cField:c	cFieldList:l		{: RESULT = new AstCFieldList(c,l);    :
 					| cField:c						{: RESULT = new AstCFieldList(c,null); :}
 					;
 
-cField 		::=		varDec:v		{: RESULT = new AstCFieldVar(v);  :}
-					| funcDec:f		{: RESULT = new AstCFieldFunc(f); :}
+/* a class field is a var or func declaration, passed up as is */
+cField 		::=		varDec:v		{: RESULT = v; :}
+					| funcDec:f		{: RESULT = f; :}
 					;
 
 arrayTypedef::= 	ARRAY ID:i EQ type:t LBRACK RBRACK SEMICOLON {: RESULT = new AstArrayTypedef(i,t); :}

@@ -1,6 +1,6 @@
 package ast;
 
-public abstract class AstVarDec extends AstNode
+public abstract class AstVarDec extends AstDec
 {
 	/******************************************/
 	/* type ID [ := exp | := newExp ] ;       */

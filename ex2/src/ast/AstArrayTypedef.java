@@ -1,6 +1,6 @@
 package ast;
 
-public class AstArrayTypedef extends AstNode
+public class AstArrayTypedef extends AstDec
 {
 	/*****************************************/
 	/*  ARRAY ID = type [ ] ;                */

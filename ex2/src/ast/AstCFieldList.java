@@ -5,13 +5,13 @@ public class AstCFieldList extends AstNode
 	/****************/
 	/* DATA MEMBERS */
 	/****************/
-	public AstCField head;
+	public AstDec head;
 	public AstCFieldList tail;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AstCFieldList(AstCField head, AstCFieldList tail)
+	public AstCFieldList(AstDec head, AstCFieldList tail)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
